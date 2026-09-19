@@ -5,7 +5,7 @@ public class SinglyLinkedList<E extends Comparable<E>> {
     private Node<E> tail = null;
     private int size = 0;
 
-    private static class Node<E> {
+    private static class Node<E> { 
         private E element;
         private Node<E> next;
     
