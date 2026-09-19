@@ -101,7 +101,58 @@ public class SinglyLinkedList<E extends Comparable<E>> {
 
     // write your codes here
     public void swap(){
-        
+        if (size <= 1) {
+            return;
+        }
+
+        // Store all existing nodes
+        ArrayList<Node<E>> nodes = new ArrayList<>();
+
+        Node<E> current = head;
+
+        while (current != null) {
+            nodes.add(current);
+            current = current.getNext();
+        }
+
+        // Make a copy and sort it by element value
+        ArrayList<Node<E>> sorted = new ArrayList<>(nodes);
+
+        sorted.sort((a, b) ->
+            ((Comparable<E>) a.getElement()).compareTo(b.getElement())
+        );
+
+        // Swap smallest with biggest,
+        // second smallest with second biggest, etc.
+        int left = 0;
+        int right = sorted.size() - 1;
+
+        while (left < right) {
+
+            Node<E> smallest = sorted.get(left);
+            Node<E> biggest = sorted.get(right);
+
+            int smallestIndex = nodes.indexOf(smallest);
+            int biggestIndex = nodes.indexOf(biggest);
+
+            // Swap their positions in the nodes ArrayList
+            nodes.set(smallestIndex, biggest);
+            nodes.set(biggestIndex, smallest);
+
+            left++;
+            right--;
+        }
+
+        // Reconnect the nodes
+        head = nodes.get(0);
+
+        for (int i = 0; i < nodes.size() - 1; i++) {
+            nodes.get(i).setNext(nodes.get(i + 1));
+        }
+
+        // Set tail
+        tail = nodes.get(nodes.size() - 1);
+        tail.setNext(null);
 
     }
    
